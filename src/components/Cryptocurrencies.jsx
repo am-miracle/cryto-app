@@ -4,6 +4,7 @@ import { Card, Row, Col, Input } from 'antd';
 import millify from 'millify';
 
 import {useGetCryptosQuery} from '../services/cryptoApi';
+import Loader from './Loader';
 
 
 const Cryptocurrencies = ({simplified}) => {
@@ -21,7 +22,7 @@ const Cryptocurrencies = ({simplified}) => {
   },[cryptosList, searchTerm]);
 
 
-  if(isFetching) return 'Loading...';
+  if(isFetching) return <Loader />;
 
   return (
   <>
@@ -33,7 +34,7 @@ const Cryptocurrencies = ({simplified}) => {
     <Row gutter={[ 32,32 ]} className='crypto-card-container'>
       {cryptos?.map((currency)=>(
         <Col xs={24} sm={12} lg={6} className='crypto-card' key={currency.uuid}>
-          <Link to={`/crypto/${currency.uuid}`}>
+          <Link to={`/crypto/${currency.uuid}`} key={currency.uuid}>
             <Card 
               title={`${currency.rank}. ${currency.name}`}
               extra={<img className='crypto-image' src={currency.iconUrl} alt='currency logo'/>}
